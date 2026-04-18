@@ -26,6 +26,6 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 
 - [ ] Create basic recommendation logic using tag matching  
 
-- [ ] Test app locally and fix setup issues  
+- [ ] Test app and fix setup issues  
 
 - [ ] Document how to run the project  
