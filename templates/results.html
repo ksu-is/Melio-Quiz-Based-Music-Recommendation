@@ -18,12 +18,15 @@
     {% if songs %}
         <h2>Recommended Songs:</h2>
 
-        {% for song in songs %}
-            <p>{{ song.title }} - {{ song.artist }} (score: {{ song.score }})</p>
-        {% endfor %}
-    {% else %}
-        <p>No matches found</p>
-    {% endif %}
+    {% for song in songs %}
+      <div>
+        <h3>{{ song.title }} by {{ song.artist }}</h3>
+        <p>Match score: {{ song.score }}</p>
+        <p>
+          Why: {{ song.reasons | join(", ") }}
+        </p>
+      </div>
+    {% endfor %}
 
 </body>
 </html>
