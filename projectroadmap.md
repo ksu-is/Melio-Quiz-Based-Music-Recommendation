@@ -18,15 +18,9 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 
 - [x] Set up Flask app structure with `app.py`  
 
-- [ ] Create homepage, quiz page, and results page templates  
-
-- [ ] Build a CSV file with sample songs and tags  
-
 - [ ] Implement quiz form to collect user input  
 
 - [ ] Create basic recommendation logic using tag matching  
-
-- [ ] Test app and fix setup issues  
 
 - [ ] Document how to run the project  
 
