@@ -10,7 +10,7 @@ def load_songs():
         for row in reader:
             songs.append(row)
     return songs
-    
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -35,7 +35,8 @@ def results():
         if song["mood"] == mood:
             score += 1
 
-        if song["genre"] == genre:
+        song_genres = song["genre"].split(",")
+        if genre in song_genres:
             score += 1
 
         if song["energy"] == energy:
@@ -53,3 +54,6 @@ def results():
     top_matches = matches[:5]
 
     return render_template("results.html", songs=top_matches)
+
+if __name__ == "__main__":
+    app.run(debug=True)
