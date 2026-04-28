@@ -16,7 +16,7 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 
 ## Tasks for Sprint 1
 
-- [ ] Set up Flask app structure with `app.py`  
+- [x] Set up Flask app structure with `app.py`  
 
 - [ ] Create homepage, quiz page, and results page templates  
 
@@ -29,3 +29,18 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 - [ ] Test app and fix setup issues  
 
 - [ ] Document how to run the project  
+
+## Tasks for Sprint 2
+
+- [x] Created Flask app file (app.py)
+
+- [ ] Added homepage template
+
+- [ ] Add quiz page
+
+- [ ] Process Quiz Input
+
+- [ ] Show results page
+    
+- [ ] Begin recommendation logic
+
