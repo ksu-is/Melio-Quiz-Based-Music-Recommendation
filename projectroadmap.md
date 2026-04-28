@@ -16,13 +16,21 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 
 ## Tasks for Sprint 1
 
+
+- [x] Set up project files including README.md and projectroadmap.md
+
+- [x] Research similar music recommendation projects
+
+- [x] Plan structure of the application
+
 - [x] Set up Flask app structure with `app.py`  
 
 - [ ] Implement quiz form to collect user input  
 
 - [ ] Create basic recommendation logic using tag matching  
 
-- [ ] Document how to run the project  
+- [ ] Document how to run the project
+
 
 ## Tasks for Sprint 2
 
