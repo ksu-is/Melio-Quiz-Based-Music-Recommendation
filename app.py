@@ -1,7 +1,16 @@
+import csv
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+def load_songs():
+    songs = []
+    with open("songs.csv", newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            songs.append(row)
+    return songs
+    
 @app.route("/")
 def home():
     return render_template("index.html")
