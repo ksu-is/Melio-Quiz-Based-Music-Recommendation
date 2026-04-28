@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Quiz</title>
-</head>
-<body>
-    <h1>Quick Music Quiz</h1>
+<form method="POST" action="/results">
+    <label>Mood:</label>
+    <select name="mood">
+        <option value="happy">Happy</option>
+        <option value="sad">Sad</option>
+    </select>
 
-    <form>
-        <label>Mood:</label>
-        <select>
-            <option>Happy</option>
-            <option>Sad</option>
-        </select>
-    </form>
-</body>
-</html>
+    <br><br>
+
+    <label>Genre:</label>
+    <select name="genre">
+        <option value="pop">Pop</option>
+        <option value="rap">Rap</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Get Recommendation</button>
+</form>
