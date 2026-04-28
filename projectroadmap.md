@@ -36,7 +36,7 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 
 - [x] Created Flask app file (app.py)
 
-- [ ] Added homepage template
+- [x] Added homepage template
 
 - [ ] Add quiz page
 
