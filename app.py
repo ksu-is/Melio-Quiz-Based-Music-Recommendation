@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 def load_songs():
     songs = []
-    with open("songs.csv", newline="", encoding="utf-8") as file:
+    with open("melio_songs.csv", newline="", encoding="utf-8") as file:
         reader = csv.DictReader(file)
         for row in reader:
             songs.append(row)
