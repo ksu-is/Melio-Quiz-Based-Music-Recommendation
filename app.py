@@ -31,22 +31,28 @@ def results():
 
     for song in songs:
         score = 0
+        reasons = []
 
         if song["mood"] == mood:
-            score += 1
+            score += 3
+            reasons.append("matches your mood")
 
-        song_genres = song["genre"].split(",")
+        song_genres = [g.strip() for g in song["genre"].split(",")]
         if genre in song_genres:
-            score += 1
+            score += 2
+            reasons.append("matches your genre")
 
         if song["energy"] == energy:
             score += 1
+            reasons.append("matches your energy")
 
         if song["activity"] == activity:
             score += 1
+            reasons.append("fits your activity")
 
         if score > 0:
             song["score"] = score
+            song["reasons"] = reasons
             matches.append(song)
 
     matches.sort(key=lambda x: x["score"], reverse=True)
@@ -54,6 +60,3 @@ def results():
     top_matches = matches[:5]
 
     return render_template("results.html", songs=top_matches)
-
-if __name__ == "__main__":
-    app.run(debug=True)
