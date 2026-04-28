@@ -8,7 +8,22 @@
 
     <p>Mood: {{ mood }}</p>
     <p>Genre: {{ genre }}</p>
+    <p>Energy: {{ energy }}</p>
+    <p>Activity: {{ activity }}</p>
 
     <a href="/quiz">Try again</a>
+
+    <hr>
+
+    {% if songs %}
+        <h2>Recommended Songs:</h2>
+
+        {% for song in songs %}
+            <p>{{ song.title }} - {{ song.artist }} (score: {{ song.score }})</p>
+        {% endfor %}
+    {% else %}
+        <p>No matches found</p>
+    {% endif %}
+
 </body>
 </html>
