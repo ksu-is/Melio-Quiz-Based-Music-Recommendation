@@ -40,9 +40,9 @@ I explored a similar music recommendation Flask project on GitHub that uses tagg
 
 - [x] Add quiz page
 
-- [ ] Process Quiz Input
+- [x] Process Quiz Input
 
-- [ ] Show results page
+- [x] Show results page
     
 - [ ] Begin recommendation logic
 
