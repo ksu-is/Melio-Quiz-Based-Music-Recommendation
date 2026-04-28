@@ -9,4 +9,4 @@ def results():
     mood = request.form.get("mood")
     genre = request.form.get("genre")
 
-    return f"You selected {mood} and {genre}"
+    return render_template("results.html", mood=mood, genre=genre)
