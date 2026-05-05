@@ -4,5 +4,5 @@ Welcome to my IS Flask + Python app that recommends songs by matching the user's
 <br>
 
 
-![Melio Homepage](images/melio_homepage.png)
+![Melio Homepage](images/melio_homepage_1.png)
 
