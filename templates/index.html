@@ -1,11 +1,268 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Melio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Melio — Music For Your Mood</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #c8a96e;
+      --accent2: #7c6fcd;
+      --text: #e8e4dc;
+      --muted: #6e6a7c;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    /* background */
+    .bg-orbs {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent2); top: -150px; left: -100px; animation-duration: 20s; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent); bottom: -100px; right: -80px; animation-duration: 15s; animation-delay: -5s; }
+    .orb-3 { width: 300px; height: 300px; background: #e05a8a; top: 40%; left: 50%; animation-duration: 25s; animation-delay: -10s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    /* layout */
+    .page {
+      position: relative; z-index: 2;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    /* left side */
+    .left {
+      padding: 80px 60px 80px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 56px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 18px; height: 18px; fill: var(--bg); }
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 4vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: 52px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      width: fit-content;
+    }
+    .cta:hover {
+      background: var(--text);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(200,169,110,0.3);
+    }
+    .cta svg { width: 16px; height: 16px; transition: transform 0.2s; }
+    .cta:hover svg { transform: translateX(4px); }
+
+    .stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--text);
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* right side */
+    .right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .vinyl-wrapper {
+      position: relative;
+      width: 360px; height: 360px;
+    }
+    .vinyl {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        #1a1a2e, #16213e, #0f3460, #1a1a2e,
+        #16213e, #0f3460, #1a1a2e, #16213e,
+        #0f3460, #1a1a2e
+      );
+      box-shadow: 0 0 0 2px #2a2a3e, 0 30px 80px rgba(0,0,0,0.7);
+      animation: spin 12s linear infinite;
+      position: relative;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* vinyl designn */
+    .vinyl::before {
+      content: '';
+      position: absolute; inset: 12%;
+      border-radius: 50%;
+      background: repeating-radial-gradient(
+        circle at center,
+        transparent 0px,
+        transparent 6px,
+        rgba(255,255,255,0.025) 6px,
+        rgba(255,255,255,0.025) 7px
+      );
+    }
+
+    /* center label */
+    .vinyl-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+    }
+    .vinyl-center span {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+  </style>
 </head>
 <body>
-    <h1>Welcome to Melio</h1>
-    <p>Music recommendations based on your mood.</p>
-    <a href="/quiz">Start Quiz</a>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="page">
+    <div class="left">
+      <div class="logo-mark">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+        </div>
+        <span class="logo-name">Melio</span>
+      </div>
+
+      <h1>Music made<br/>for <em>your</em> mood.</h1>
+
+      <p class="tagline">Answer a few questions about how you feel, and Melio will find the perfect tracks for this moment.</p>
+
+      <a href="/quiz" class="cta">
+        Take the Quiz
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <div class="stats">
+        <div>
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Genres</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Moods</div>
+        </div>
+        <div>
+          <div class="stat-num">Top 5</div>
+          <div class="stat-label">Matches</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="vinyl-wrapper">
+        <div class="vinyl"></div>
+        <div class="vinyl-center"><span>melio</span></div>
+
+        </div>
+      </div>
+  </div>
 </body>
 </html>
