@@ -1,32 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Results</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Melio — Your Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #c8a96e;
+      --accent2: #7c6fcd;
+      --text: #e8e4dc;
+      --muted: #6e6a7c;
+      --card: #13131c;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .bg-orbs {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); opacity: 0.12;
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent2); top: -150px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent); bottom: -80px; left: -80px; animation-delay: -8s; }
+    @keyframes drift {
+      from { transform: translate(0,0); }
+      to   { transform: translate(30px, 20px); }
+    }
+
+    .page {
+      position: relative; z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 100px;
+    }
+
+    /* nav */
+    nav {
+      width: 100%; max-width: 760px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .logo-link {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 14px; height: 14px; fill: var(--bg); }
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; letter-spacing: 0.1em;
+      color: var(--accent); text-transform: uppercase;
+    }
+    .try-again {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .try-again:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Header */
+    .results-header {
+      width: 100%; max-width: 760px;
+      margin-bottom: 48px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .results-header .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .results-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* tags */
+    .pref-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--card);
+    }
+    .tag span { color: var(--text); font-weight: 500; }
+
+    /* divider */
+    .divider {
+      width: 100%; max-width: 760px;
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0 40px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    /* song list */
+    .song-list {
+      width: 100%; max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .song-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: center;
+      gap: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+      animation: fadeUp 0.7s ease both;
+    }
+    .song-card:nth-child(1) { animation-delay: 0.15s; }
+    .song-card:nth-child(2) { animation-delay: 0.22s; }
+    .song-card:nth-child(3) { animation-delay: 0.29s; }
+    .song-card:nth-child(4) { animation-delay: 0.36s; }
+    .song-card:nth-child(5) { animation-delay: 0.43s; }
+    .song-card:hover { border-color: rgba(200,169,110,0.4); transform: translateY(-2px); }
+
+    /* top pick badge */
+    .song-card.top { border-color: rgba(200,169,110,0.3); background: linear-gradient(135deg, #17171f, #1a1710); }
+
+    .song-rank {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+    .song-card.top .song-rank {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+    }
+
+    .song-info { min-width: 0; }
+    .song-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .song-artist {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .song-reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .reason-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(124,111,205,0.15);
+      border: 1px solid rgba(124,111,205,0.25);
+      color: #a89fe8;
+    }
+
+    .song-score {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .score-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--accent);
+    }
+    .score-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* in case i didn't add enough and there's no results */
+    .no-results {
+      text-align: center;
+      padding: 80px 40px;
+      animation: fadeUp 0.7s ease both;
+    }
+    .no-results p {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .no-results h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .no-results small { color: var(--muted); font-size: 0.9rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <h1>Your Results</h1>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
 
-    <p>Mood: {{ mood }}</p>
-    <p>Genre: {{ genre }}</p>
-    <p>Energy: {{ energy }}</p>
-    <p>Activity: {{ activity }}</p>
+  <div class="page">
+    <nav>
+      <a href="/" class="logo-link">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+        </div>
+        <span class="logo-name">Melio</span>
+      </a>
+      <a href="/quiz" class="try-again">
+        ↩ Retake Quiz
+      </a>
+    </nav>
 
-    <a href="/quiz">Try again</a>
+    <div class="results-header">
+      <div class="label">Your Matches</div>
+      <h1>Here's what we found<br/>for you.</h1>
+      <div class="pref-tags">
+        {% if mood %}<div class="tag">Mood: <span>{{ mood }}</span></div>{% endif %}
+        {% if genre %}<div class="tag">Genre: <span>{{ genre }}</span></div>{% endif %}
+        {% if energy %}<div class="tag">Energy: <span>{{ energy }}</span></div>{% endif %}
+        {% if activity %}<div class="tag">Activity: <span>{{ activity }}</span></div>{% endif %}
+      </div>
+    </div>
 
-    <hr>
+    <div class="divider"></div>
 
     {% if songs %}
-        <h2>Recommended Songs:</h2>
-
-    {% for song in songs %}
-      <div>
-        <h3>{{ song.title }} by {{ song.artist }}</h3>
-        <p>Match score: {{ song.score }}</p>
-        <p>
-          Why: {{ song.reasons | join(", ") }}
-        </p>
+    <div class="song-list">
+      {% for song in songs %}
+      <div class="song-card {% if loop.first %}top{% endif %}">
+        <div class="song-rank">{{ loop.index }}</div>
+        <div class="song-info">
+          <div class="song-title">{{ song.title }}</div>
+          <div class="song-artist">{{ song.artist }}</div>
+          <div class="song-reasons">
+            {% for reason in song.reasons %}
+            <span class="reason-tag">{{ reason }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="song-score">
+          <div class="score-num">{{ song.score }}</div>
+          <div class="score-label">score</div>
+        </div>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
 
+    {% else %}
+    <div class="no-results">
+      <p>🎵</p>
+      <h2>No matches found</h2>
+      <small>Try different preferences — we'll find something for you.</small>
+    </div>
+    {% endif %}
+  </div>
 </body>
 </html>
